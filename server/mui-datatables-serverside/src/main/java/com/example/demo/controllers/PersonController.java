@@ -1,6 +1,9 @@
 package com.example.demo.controllers;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +25,12 @@ public class PersonController {
 
 	@GetMapping(value = "/people")
 	public ResponseEntity<List<Person>> getPeople(PageableProps pageable, SortableProps sortable) {
-		return ResponseEntity.ok(personService.getAllPeople(pageable, sortable));
+		return ResponseEntity.ok(personService.getPeople(pageable, sortable));
+	}
+	
+	@GetMapping(value = "/people/export")
+	public void exportPeople(HttpServletResponse response, PageableProps pageable, SortableProps sortable) throws IOException {
+		personService.exportPeople(response);
 	}
 	
 }

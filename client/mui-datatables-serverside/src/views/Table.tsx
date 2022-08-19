@@ -1,6 +1,8 @@
-import { usePeople } from '../stores/PersonStore';
+import { PersonStore, usePeople } from '../stores/PersonStore';
 import MUIDataTable from 'mui-datatables';
 import React from 'react';
+
+const personStore = new PersonStore();
 
 const Table = () => {
   const [pageNumber, setPageNumber] = React.useState(0);
@@ -16,12 +18,23 @@ const Table = () => {
   );
   const columns = ['name', 'age', 'height', 'weight'];
 
+  const handleDownload = (
+    buildHead: (columns: any) => string,
+    buildBody: (data: any) => string,
+    columns: any,
+    data: any
+  ) => {
+    personStore.export(pageNumber, pageSize, sortColumn, sortDirection);
+    return false;
+  };
+
   return (
     <MUIDataTable
       title='People'
       data={people?.data ?? []}
       columns={columns}
       options={{
+        onDownload: handleDownload,
         serverSide: true,
         selectableRows: 'none',
         page: pageNumber,

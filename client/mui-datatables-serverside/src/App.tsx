@@ -4,7 +4,17 @@ import './App.css';
 import Table from './views/Table';
 
 function App() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: true,
+        retry: false,
+        staleTime: 30 * 1000,
+      },
+    },
+  });
 
   return (
     <div className='App'>

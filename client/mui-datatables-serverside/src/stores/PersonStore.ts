@@ -1,5 +1,6 @@
+import axios from 'axios';
 import { useQuery } from 'react-query';
-import { get } from './BaseStore';
+import { download, getPaged } from './BaseStore';
 
 export const usePeople = (
   pageNumber: number,
@@ -10,8 +11,19 @@ export const usePeople = (
   return useQuery(
     ['people', pageNumber, pageSize, sortColumn, sortDirection],
     async () =>
-      get(
-        `people?pageNumber=${pageNumber}&pageSize=${pageSize}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`
-      )
+      getPaged('people', pageNumber, pageSize, sortColumn, sortDirection)
   );
 };
+
+export class PersonStore {
+  export(
+    pageNumber: number,
+    pageSize: number,
+    sortColumn: string,
+    sortDirection: string
+  ) {
+    download(
+      `people/export?pageNumber=${pageNumber}&pageSize=${pageSize}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`
+    );
+  }
+}
