@@ -1,0 +1,16 @@
+input,expected
+"<?xml version=""1.0"" encoding=""UTF-8"" ?>
+<first>
+  <input>hello</input>
+  <output>world</output>
+</first>",first
+"<?xml version=""1.0"" encoding=""UTF-8"" ?>
+<second>
+  <input>hello</input>
+  <output>world</output>
+</second>",second
+"<?xml version=""1.0"" encoding=""UTF-8"" ?>
+<third>
+  <input>hello</input>
+  <output>world</output>
+</third>",third
