@@ -1,0 +1,10 @@
+INSERT INTO people (id, name, age, height, weight) VALUES (1, 'Goatplanter Fulton', 23, 61, 156);
+INSERT INTO people (id, name, age, height, weight) VALUES (2, 'Hoggreaser Pressley', 42, 67, 142);
+INSERT INTO people (id, name, age, height, weight) VALUES (3, 'Oatchaser Banner', 12, 56, 131);
+INSERT INTO people (id, name, age, height, weight) VALUES (4, 'Pighauler Finch', 51, 73, 232);
+INSERT INTO people (id, name, age, height, weight) VALUES (5, 'Gumppicker MacNiven', 72, 62, 190);
+INSERT INTO people (id, name, age, height, weight) VALUES (6, 'Pickupfarmer Hobson', 32, 57, 173);
+INSERT INTO people (id, name, age, height, weight) VALUES (7, 'Shotgungrazer Neville', 26, 70, 205);
+INSERT INTO people (id, name, age, height, weight) VALUES (8, 'Goatpusher Duane', 83, 73, 179);
+INSERT INTO people (id, name, age, height, weight) VALUES (9, 'Chickengreaser Whitehead', 63, 63, 163);
+INSERT INTO people (id, name, age, height, weight) VALUES (10, 'Sheeptoter MacIntyre', 15, 51, 95);

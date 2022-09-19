@@ -1,19 +1,19 @@
 package com.example.demo.controllers;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.demo.models.PageableProps;
 import com.example.demo.models.Person;
-import com.example.demo.models.SortableProps;
 import com.example.demo.services.PersonService;
 
 @Controller()
@@ -24,12 +24,12 @@ public class PersonController {
 	PersonService personService;
 
 	@GetMapping(value = "/people")
-	public ResponseEntity<List<Person>> getPeople(PageableProps pageable, SortableProps sortable) {
-		return ResponseEntity.ok(personService.getPeople(pageable, sortable));
+	public ResponseEntity<Page<Person>> getPeople(Pageable pageable, Sort sort, String search) {
+		return ResponseEntity.ok(personService.getPeople(pageable, sort, search));
 	}
 	
 	@GetMapping(value = "/people/export")
-	public void exportPeople(HttpServletResponse response, PageableProps pageable, SortableProps sortable) throws IOException {
+	public void exportPeople(HttpServletResponse response, Sort sort, String search) throws IOException {
 		personService.exportPeople(response);
 	}
 	

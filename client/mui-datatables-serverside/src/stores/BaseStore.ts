@@ -11,11 +11,15 @@ export const getPaged = async (
   pageNumber: number,
   pageSize: number,
   sortColumn: string,
-  sortDirection: string
+  sortDirection: string,
+  search: string | null
 ) => {
-  return await get(
-    `${path}?pageNumber=${pageNumber}&pageSize=${pageSize}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`
-  );
+  let query = `${path}?page=${pageNumber}&size=${pageSize}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`;
+  if (search) {
+    query = query.concat(`&search=${search}`);
+  }
+
+  return await get(query);
 };
 
 export const download = (path: string) => {

@@ -1,27 +1,27 @@
 package com.example.demo.services;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PagedListHolder;
-import org.springframework.beans.support.SortDefinition;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
-import com.example.demo.models.PageableProps;
 import com.example.demo.models.Person;
-import com.example.demo.models.SortableProps;
 import com.example.demo.repositories.PersonRepository;
+import com.example.demo.specifications.PersonSpecification;
 
 @Service
 public class PersonService {
@@ -29,10 +29,13 @@ public class PersonService {
 	@Autowired
 	PersonRepository personRepository;
 	
-	
-	
-	public List<Person> getPeople(PageableProps pageable, SortableProps sortable) {
-		return getPagedSortedList(personRepository.findAllPeople(), pageable, sortable);
+	public Page<Person> getPeople(Pageable pageable, Sort sort, String search) {
+		// Realistically this would be provided in the API request
+		List<String> columns = Arrays.asList("name", "age", "height", "weight");
+		
+		return personRepository.findAll(
+				PersonSpecification.build(columns, search), 
+				PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort));
 	}
 	
 	public void exportPeople(HttpServletResponse response) throws IOException {
@@ -49,21 +52,11 @@ public class PersonService {
 		
 		csvWriter.writeHeader(csvHeader);
 		
-		for (Person person : personRepository.findAllPeople()) {
+		for (Person person : personRepository.findAll()) {
 			csvWriter.write(person, nameMapping);
 		}
 		
 		csvWriter.close();
-	}
-	
-	private List<Person> getPagedSortedList(List<Person> people, PageableProps pageable, SortableProps sortable) {
-		PagedListHolder<Person> page = new PagedListHolder<>(people, sortable.buildSortDefinition());
-		
-		page.resort();
-		page.setPage(pageable.getPageNumber());
-		page.setPageSize(pageable.getPageSize());
-		
-		return page.getPageList();
 	}
 	
 }
